@@ -6,10 +6,6 @@ public enum Role {
 
     BANK_EMPLOYEE,
 
-    CUSTOMER,
-
     FINANCIAL_ANALYST,
-
-    DATA_ADMINISTRATOR
 
 }

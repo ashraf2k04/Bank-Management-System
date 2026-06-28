@@ -17,7 +17,6 @@ public class MainMenu {
     private final EmployeeMenu employeeMenu;
     private final CustomerMenu customerMenu;
     private final AnalystMenu analystMenu;
-    private final DataAdminMenu dataAdminMenu;
 
     private final Scanner scanner;
 
@@ -29,7 +28,6 @@ public class MainMenu {
         employeeMenu = new EmployeeMenu();
         customerMenu = new CustomerMenu();
         analystMenu = new AnalystMenu();
-        dataAdminMenu = new DataAdminMenu();
 
         scanner = InputUtil.getScanner();
 
@@ -64,10 +62,7 @@ public class MainMenu {
                     case 4 ->
                         analystLogin();
 
-                    case 5 ->
-                        dataAdministratorLogin();
-
-                    case 6 -> {
+                    case 5 -> {
 
                         System.out.println();
                         System.out.println("Thank you for using Bank Management System.");
@@ -246,49 +241,6 @@ public class MainMenu {
             if (authenticationService.isAnalyst(employee)) {
 
                 analystMenu.show(employee);
-
-            }
-
-            else {
-
-                System.out.println();
-                System.out.println("Access Denied.");
-                System.out.println();
-
-            }
-
-        }
-
-        catch (Exception exception) {
-
-            GlobalExceptionHandler.handle(exception);
-
-        }
-
-    }
-
-    /*
-     * ==========================================
-     * DATA ADMINISTRATOR LOGIN
-     * ==========================================
-     */
-
-    private void dataAdministratorLogin() {
-
-        try {
-
-            System.out.print("Employee ID : ");
-            String id = scanner.nextLine();
-
-            System.out.print("Password : ");
-            String password = scanner.nextLine();
-
-            Employee employee =
-                    authenticationService.employeeLogin(id, password);
-
-            if (authenticationService.isDataAdministrator(employee)) {
-
-                dataAdminMenu.show(employee);
 
             }
 

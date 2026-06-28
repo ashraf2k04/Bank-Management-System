@@ -14,10 +14,15 @@ import models.users.Customer;
 import models.users.Employee;
 import models.accounts.BankAccount;
 import models.accounts.SavingsAccount;
+import models.loan.Loan;
+import models.loan.LoanType;
+import models.loan.LoanStatus;
 
 import repository.CustomerRepository;
 import repository.EmployeeRepository;
 import repository.AccountRepository;
+import repository.LoanRepository;
+
 
 import util.IdGenerator;
 
@@ -26,12 +31,14 @@ public class AuthenticationService {
     private final CustomerRepository customerRepository;
     private final EmployeeRepository employeeRepository;
     private final AccountRepository accountRepository;
+    private final LoanRepository loanRepository;
 
     public AuthenticationService() {
 
         customerRepository = new CustomerRepository();
         employeeRepository = new EmployeeRepository();
         accountRepository = new AccountRepository();
+        loanRepository = new LoanRepository();
 
     }
 
@@ -109,12 +116,7 @@ public class AuthenticationService {
 
     }
 
-    public boolean isDataAdministrator(Employee employee) {
 
-        return employee.getRole() ==
-                Role.DATA_ADMINISTRATOR;
-
-    }
 
     /*
     * ======================================
@@ -138,12 +140,12 @@ public class AuthenticationService {
                 employeeRepository.addEmployee(createDefaultAnalyst());
             }
 
-            if (!employeeRepository.exists("EMP1004")) {
-                employeeRepository.addEmployee(createDefaultDataAdministrator());
-            }
-
             if (!customerRepository.exists("CUS1001")) {
                 customerRepository.addCustomer(createDefaultCustomer());
+            }
+
+            if (!customerRepository.exists("CUS1002")) {
+                customerRepository.addCustomer(createSecondCustomer());
             }
 
         } catch (Exception ignored) {
@@ -217,25 +219,6 @@ public class AuthenticationService {
 
     }
 
-    public Employee createDefaultDataAdministrator() {
-
-        return new Employee(
-                "EMP1004",
-                "Rohit",
-                "Singh",
-                "dataadmin@bank.com",
-                Constants.DEFAULT_PASSWORD,
-                "Bangalore",
-                "18-12-1995",
-                "EMP1004",
-                Designation.ADMINISTRATOR,
-                Department.IT,
-                Role.DATA_ADMINISTRATOR,
-                70000
-        );
-
-    }
-
     public Customer createDefaultCustomer() {
 
         Customer customer = new Customer(
@@ -263,10 +246,58 @@ public class AuthenticationService {
 
             accountRepository.addAccount(account);
 
+            Loan loan = new Loan(
+                    "LOAN1001",
+                    customer,
+                    LoanType.PERSONAL,
+                    LoanStatus.PENDING,
+                    "TCS",
+                    "Software Engineer",
+                    250000,
+                    36
+            );
+
+            loanRepository.addLoan(loan);
+
         } catch (Exception ignored) {
 
         }
 
+
+        return customer;
+
+    }
+
+    public Customer createSecondCustomer() {
+
+        Customer customer = new Customer(
+                "CUS1002",
+                "Riya",
+                "Sharma",
+                "riya@bank.com",
+                Constants.DEFAULT_PASSWORD,
+                "Mumbai",
+                "20-07-2001",
+                "7654321",
+                "987654321012",
+                "XYZAB1234P",
+                "9876501234"
+        );
+
+        BankAccount account = new SavingsAccount(
+                IdGenerator.generateAccountNumber(),
+                5000.0
+        );
+
+        customer.addAccount(account);
+
+        try {
+
+            accountRepository.addAccount(account);
+
+        } catch (Exception ignored) {
+
+        }
 
         return customer;
 

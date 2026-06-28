@@ -7,18 +7,17 @@ public final class MenuConstants {
 
     public static final String MAIN_MENU = """
 
-=========================================
-      BANK MANAGEMENT SYSTEM
-=========================================
+        =========================================
+            BANK MANAGEMENT SYSTEM
+        =========================================
 
-1. Login as Bank Manager
-2. Login as Bank Employee
-3. Login as Customer
-4. Login as Financial Analyst
-5. Login as Data Administrator
-6. Exit
+        1. Login as Bank Manager
+        2. Login as Bank Employee
+        3. Login as Customer
+        4. Login as Financial Analyst
+        5. Exit
 
-Enter Choice :
-""";
+        Enter Choice :
+        """;
 
 }

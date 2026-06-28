@@ -4,6 +4,8 @@ import java.util.UUID;
 
 public final class IdGenerator {
 
+    private static int count = 1;
+
     private IdGenerator() {
     }
 
@@ -21,7 +23,7 @@ public final class IdGenerator {
 
     public static String generateAccountNumber() {
 
-        return "ACC" + System.currentTimeMillis();
+        return "ACC0000"+ count++;
 
     }
 

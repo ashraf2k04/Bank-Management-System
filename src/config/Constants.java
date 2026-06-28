@@ -7,12 +7,7 @@ public final class Constants {
 
     // Bank Details
 
-    public static final String BANK_NAME = "BMS National Bank";
-
     public static final String IFSC_CODE = "BMS0001234";
-    public static final String DEFAULT_IFSC = "BMS0001234";
-
-    public static final String CURRENCY = "₹";
 
     // Savings Account
 

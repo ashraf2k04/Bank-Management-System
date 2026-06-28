@@ -65,13 +65,13 @@ public class CustomerMenu {
                         viewAccounts(customer);
 
                     case 2 ->
-                        balanceInquiry();
+                        balanceInquiry(customer);
 
                     case 3 ->
-                        transfer();
+                        transfer(customer);
 
                     case 4 ->
-                        transactionHistory();
+                        transactionHistory(customer);
 
                     case 5 ->
                         updateContact(customer);
@@ -125,20 +125,45 @@ public class CustomerMenu {
      * ==========================================
      */
 
-    private void balanceInquiry() {
+    private boolean validateCustomerAccount(Customer customer,
+                                            String accountNumber) {
+
+        for (BankAccount account : customer.getAccounts()) {
+
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return true;
+            }
+
+        }
+
+        System.out.println();
+        System.out.println("======================================");
+        System.out.println("           ACCESS DENIED");
+        System.out.println("======================================");
+        System.out.println("This account does not belong to you.");
+        System.out.println();
+
+        return false;
+
+    }
+
+    private void balanceInquiry(Customer customer) {
 
         try {
 
             System.out.print("Account Number : ");
 
-            String account =
-                    scanner.nextLine();
+            String accountNumber = scanner.nextLine();
+
+            if (!validateCustomerAccount(customer, accountNumber)) {
+                return;
+            }
 
             double balance =
-                    customerService.checkBalance(account);
+                    customerService.checkBalance(accountNumber);
 
             System.out.println();
-            System.out.println("Current Balance : ₹" + balance);
+            System.out.println("Current Balance : Rs. " + balance);
 
         }
 
@@ -156,19 +181,21 @@ public class CustomerMenu {
      * ==========================================
      */
 
-    private void transfer() {
+    private void transfer(Customer customer) {
 
         try {
 
             System.out.print("Source Account : ");
 
-            String source =
-                    scanner.nextLine();
+            String source = scanner.nextLine();
+
+            if (!validateCustomerAccount(customer, source)) {
+                return;
+            }
 
             System.out.print("Destination Account : ");
 
-            String destination =
-                    scanner.nextLine();
+            String destination = scanner.nextLine();
 
             System.out.print("Amount : ");
 
@@ -199,19 +226,22 @@ public class CustomerMenu {
      * ==========================================
      */
 
-    private void transactionHistory() {
+    private void transactionHistory(Customer customer) {
 
         try {
 
             System.out.print("Account Number : ");
 
-            String account =
-                    scanner.nextLine();
+            String accountNumber = scanner.nextLine();
+
+            if (!validateCustomerAccount(customer, accountNumber)) {
+                return;
+            }
 
             System.out.println();
 
             for (Transaction transaction :
-                    transactionService.getTransactionHistory(account)) {
+                    transactionService.getTransactionHistory(accountNumber)) {
 
                 System.out.println(transaction);
 
